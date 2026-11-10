@@ -1,0 +1,115 @@
+# Financial Dashboard — PWA v3.10.4
+
+## Contenuto
+- `index.html`: applicazione (guida utente integrata)
+- `tailwind.css`: stili compilati in locale (non serve più il CDN di Tailwind)
+- `manifest.webmanifest`, `service-worker.js`: installazione come app e funzionamento offline
+- `vendor/fontawesome/`: icone dell'interfaccia (Font Awesome Free, licenza inclusa)
+- `icons/`: icone con nome dell'app (72–512 px, maskable 192/512, apple-touch-icon 180), logo senza testo (logo-96/128/192) e favicon 64
+- `Guida_Utente_FinDashboard_Ultimate_Pro.pdf`: guida PDF aggiornata alla v3.5 (nuovo nome), apribile dall'app
+
+## Pubblicazione e installazione
+1. Carica TUTTI i file, mantenendo la cartella `icons`, su un hosting statico HTTPS (es. Netlify, GitHub Pages).
+2. Apri l'indirizzo https://... (non il file locale): installazione, offline e biometria richiedono HTTPS.
+3. Android/Chrome/Edge: pulsante "Installa" nell'app (o menu del browser). iPhone/iPad: Safari -> Condividi -> Aggiungi alla schermata Home.
+4. La prima apertura richiede Internet: librerie e font vengono salvati e poi l'app funziona offline.
+5. Chi ha già installato la v3.0: alla prima apertura online il service worker si aggiorna; riapri l'app una seconda volta per vedere nome e icone nuovi (su alcuni telefoni l'icona sulla Home si aggiorna solo reinstallando l'app).
+
+## I dati NON si spostano da soli
+I dati stanno nel browser, separati per indirizzo. I dati esistenti restano accessibili (il nome interno del database non è cambiato).
+Per trasferirli su un altro indirizzo/dispositivo: "Backup cifrato" (.enc) nella vecchia versione, poi "Ripristina da backup" nella nuova.
+
+## Novità v3.10
+- Backup con limite di copie: da Strumenti → Backup e ripristino → Automatismi scegli quante copie conservare (3, 5, 10 o 20; predefinito 10). Vale per Google Drive e per la cartella dell'app. Raggiunto il limite, il backup più vecchio viene SOVRASCRITTO da quello nuovo (su Drive il file più vecchio viene riusato: contenuto e nome aggiornati, nessun accumulo nel cestino); se abbassi il limite, le copie in eccesso vengono eliminate al backup successivo. Lo stato su Drive mostra «Copie conservate: N su M».
+- Icona: il nome completo «Financial Dashboard» è ora scritto sull'icona (tutte le misure, anche maskable e iPhone) e nel nome sotto l'icona (short_name del manifest non più abbreviato). Intestazione e favicon usano il logo senza testo (icons/logo-*.png) per restare leggibili. Su molti telefoni l'icona sulla Home cambia solo reinstallando l'app.
+- Banner promemoria backup: nuovo pulsante «Più tardi» (lo rinvia di 24 ore); il rinvio si azzera con un nuovo backup.
+- Accessibilità: contorno ben visibile sull'elemento attivo quando si naviga da tastiera.
+
+## Novità v3.10.4
+- Aggiornamento più affidabile: prima, se sul server mancava anche un solo file (es. la cartella `vendor` o `icons`), la nuova versione non si installava e l'app restava sulla vecchia senza avvisi. Ora solo `index.html`, `manifest.webmanifest` e `tailwind.css` sono indispensabili; il resto è facoltativo. Se l'installazione fallisce compare un avviso. Il pulsante «Aggiorna» ricarica comunque l'app dopo 4 secondi.
+
+## Novità v3.10.3
+- Icone e loghi sempre visibili: Font Awesome è ora incluso nel pacchetto (cartella `vendor/fontawesome`) invece di essere scaricato da Internet; funziona anche offline e alla prima apertura. Ricorda di caricare anche la cartella `vendor`.
+- Menu Strumenti riordinato senza duplicati: Guida, Blocca, Tema e Installa restano nell'intestazione; Importa CSV, Quote JSON, Report Excel/PDF, Avvisi e Cambia password sono solo in Strumenti (sezioni: Dati e report, Sicurezza, Preferenze, Backup). In Backup, Google Drive, Cartella dell'app e Automatismi si aprono a richiesta.
+
+## Novità v3.10.2
+- Il feedback aptico non viene più richiesto prima del primo tocco (evita l'avviso del browser dopo lo sblocco biometrico automatico).
+
+## Novità v3.10.1
+- Marchio vettoriale SVG aggiunto come favicon e icona PWA aggiuntiva; l'intestazione e la schermata di blocco lo usano automaticamente se il rispettivo PNG non è disponibile.
+- Cache del service worker aggiornata per distribuire subito il nuovo logo. Se l'app era già installata, aprila online e applica l'aggiornamento; alcuni sistemi mantengono l'icona Home precedente finché non reinstalli l'app.
+
+## Novità v3.9.2
+- Corretto: lo sblocco biometrico automatico all'apertura dell'app non partiva più (la finestra "Avvisi di prezzo", nascosta via CSS, veniva scambiata per una finestra aperta). Ora parte di nuovo da solo.
+
+## Novità v3.9.1
+- Barra inferiore (smartphone): sfumatura e freccia ai lati quando ci sono altre schede da scorrere (la freccia si tocca per scorrere), invito allo scorrimento all'apertura e scheda attiva portata al centro.
+
+## Novità v3.9
+- Feedback aptico (vibrazione) per salvataggi, eliminazioni, ripristini, blocco/sblocco, errori e avvisi di prezzo; si disattiva da Strumenti (solo dispositivi che supportano la vibrazione, es. Android/Chrome).
+- Backup razionalizzati: file, Google Drive e cartella dell'app sono ora tutti in Strumenti → "Backup e ripristino" (tolti i due pulsanti duplicati dalla barra in alto).
+- Pulsante Strumenti con nuova icona (cacciavite/chiave) e colore viola.
+- Avvisi di prezzo: imposta una soglia («sale a» / «scende a») per asset e BTP posseduti dalla campanella sulla riga o da Strumenti. L'avviso scatta quando il prezzo viene aggiornato (modifica manuale o Quote JSON): niente controllo automatico dei mercati. Banner, vibrazione e notifica di sistema (se consentita).
+- Assistente: nuovo pulsante "Stop" per interrompere subito la lettura vocale delle risposte (si ferma anche togliendo la spunta "Leggi le risposte", avviando la dettatura o cancellando la chat).
+
+## Novità v3.5
+- Sicurezza dei testi: descrizioni delle spese, nomi di categoria, ticker, intestatari e tipi di conto vengono ora "neutralizzati" prima della visualizzazione. Un apostrofo (es. "Dall'edicola") non rompe più i pulsanti Modifica/Elimina.
+- Categorie: non si può più creare/rinominare una categoria con un nome già esistente (anche con maiuscole diverse); eliminando una categoria con spese, queste vengono spostate in "Varie / Altro" (previa conferma) invece di restare orfane.
+- Salvataggio: se la scrittura nell'archivio fallisce (es. spazio esaurito) compare un avviso chiaro con l'invito a fare un backup. Gestione errori globale con avviso discreto.
+- Aggiornamenti: riquadro "Nuova versione disponibile" con pulsanti Aggiorna / Dopo (niente più "riapri due volte"). Il service worker non si attiva più da solo.
+- Offline reale: Tailwind è compilato in locale (`tailwind.css`), non dipende più dal CDN. Richiede un browser recente (Chrome/Edge 111+, Safari 16.4+, Firefox 128+).
+- Promemoria backup configurabile (Strumenti: disattivato / 7 / 14 / 30 giorni; predefinito 14) e backup automatico su Drive opzionale (richiede Client ID Google; se serve un'azione manuale l'app avvisa). Il banner ha il pulsante "Su Drive".
+- Guida PDF riscritta con il nome Financial Dashboard e le funzioni v3.1-v3.5; guida integrata aggiornata.
+- Service worker v3.5 (cache rinnovata, include tailwind.css).
+
+## Novità v3.4
+- Sensore biometrico pronto all'avvio: se lo sblocco biometrico è attivo, la richiesta di impronta/volto parte da sola all'apertura dell'app e quando ci si torna con il caveau bloccato, senza premere il pulsante. Se annulli (o il browser richiede un tocco, come su alcuni iPhone) resta il pulsante "Sblocca con biometria" e la password.
+- La richiesta automatica non parte se stai già scrivendo la password o hai un'altra finestra aperta, e non si ripete a raffica.
+
+## Novità v3.3
+- Numero di versione (v3.3) mostrato accanto al logo, nell'intestazione e nella schermata di blocco.
+- Service worker v3.3: cache rinnovata, riapri l'app due volte dopo l'aggiornamento per vederlo.
+
+## Novità v3.2
+- Ripristino backup corretto: il pulsante "Ripristina backup" nel menu Strumenti (e l'icona in alto) non faceva nulla (funzione mancante). Il selettore file ora accetta qualsiasi file, così su Android il .enc non risulta più disattivato.
+- Backup su Google Drive: Strumenti -> "Salva su Drive" / "Ripristina". Il file è lo stesso backup cifrato (.enc): su Drive arriva solo testo cifrato, come file visibile nel tuo Drive, cartella "Financial Dashboard Backup" (scope drive.file: l'app vede solo i file che ha creato), con le ultime 10 copie (le più vecchie vanno nel cestino). Puoi rinominarlo, spostarlo, scaricarlo o eliminarlo da Drive; non modificarne il contenuto (è cifrato). I vecchi backup salvati nella cartella nascosta restano ripristinabili. Il ripristino da Drive è disponibile anche nella schermata di creazione del caveau (nuovo dispositivo).
+- Pulsanti in alto: su smartphone ora sono 4 pulsanti grandi con etichetta (Guida, Strumenti, Blocca, Tema).
+- Biometria più robusta: se il telefono rifiuta le opzioni di attivazione, l'app riprova con opzioni più permissive; gli errori ora mostrano il motivo tecnico (es. "NotSupportedError: ...") invece di un messaggio generico; se la chiave biometrica non è più valida viene disattivata con un avviso chiaro.
+
+## Backup su Google Drive: configurazione (una tantum, gratuita)
+Serve un tuo "Client ID" Google, perché l'app non ha un server:
+1. Vai su https://console.cloud.google.com e crea un progetto (es. "Financial Dashboard").
+2. "API e servizi" -> "Libreria" -> cerca "Google Drive API" -> Abilita.
+3. "API e servizi" -> "Schermata consenso OAuth": tipo "Esterno", inserisci nome app ed e-mail; nell'elenco "Utenti di test" aggiungi il tuo account Google. Aggiungi gli ambiti "drive.file" e "drive.appdata" (non sensibili).
+4. "Credenziali" -> "Crea credenziali" -> "ID client OAuth" -> tipo "Applicazione web". In "Origini JavaScript autorizzate" metti l'indirizzo esatto dove pubblichi l'app, senza percorso (es. https://tuo-sito.netlify.app). Nessun URI di reindirizzamento.
+5. Copia il Client ID (finisce con .apps.googleusercontent.com) e incollalo in Strumenti -> "Imposta / cambia Client ID Google".
+6. Al primo "Salva su Drive" Google chiede il consenso (con progetto in modalità test può comparire l'avviso "app non verificata": Avanzate -> Continua).
+Note: se pubblichi l'app su un altro indirizzo, aggiungi anche quello alle origini autorizzate. Il Client ID è salvato solo sul dispositivo. Su iPhone, per il primo accesso a Google usa Safari (la finestra di accesso può essere bloccata nell'app installata).
+
+## Novità v3.1
+- Nuovo nome: Financial Dashboard. Nuove icone nell'app (intestazione, schermata di blocco, installazione, favicon).
+- Sblocco biometrico (WebAuthn): Strumenti -> Sblocco biometrico -> Attiva. La Master Password resta la chiave di recupero.
+  * Modalità PRF (dispositivi compatibili): la copia cifrata della password è protetta da una chiave derivata dal sensore.
+  * Modalità compatibile (altri dispositivi): la verifica biometrica funge da blocco d'accesso all'app; la chiave non è legata all'hardware.
+  * Si disattiva da sola se la password risulta cambiata; dopo "Cambia password" viene chiesta una nuova verifica per aggiornarla.
+- Cambio password: aggiunti campo di conferma, minimo 8 caratteri e controllo "diversa dalla precedente" (prima un refuso poteva rendere i dati irrecuperabili).
+- File esportati rinominati (Financial_Dashboard_Backup_*.enc, Financial_Dashboard_Report_*.xlsx).
+- Service worker v3.1 con cache aggiornata per le nuove icone.
+
+## Limiti noti
+- La biometria è legata a dispositivo e indirizzo: su un altro dispositivo, o nell'app installata su iPhone (archivio separato da Safari), va riattivata.
+- I colori di Tailwind v4 (usato per la compilazione locale) possono differire leggermente da quelli della v3.4.
+- Font Awesome, Chart.js, ExcelJS, html2canvas, jsPDF e il font restano su CDN: vengono salvati in cache dopo la prima apertura online.
+
+## Novità v3.6 — Cartella dell'app
+- L'app crea una propria cartella "Financial Dashboard" nell'archivio interno del browser e vi copia automaticamente i dati cifrati a ogni modifica (file principale + backup giornalieri, ultimi 15).
+- Strumenti → "Cartella dell'app" → "Crea cartella": scegli un punto del dispositivo (es. Documenti) e l'app crea lì "Financial Dashboard" con le sottocartelle Backup e Report. Ogni modifica viene salvata nella cartella; i report Excel/PDF finiscono anche in Report.
+- "Ripristina" elenca i file trovati nelle cartelle dell'app.
+- La cartella sul dispositivo funziona con Chrome/Edge su computer (e Android dove supportato). Su iPhone/iPad il browser non lo consente: resta la cartella interna e il "Backup cifrato".
+
+
+## Novità v3.7 — Assistente locale e voce
+- Nell'Overview è disponibile un assistente conversazionale deterministico che risponde su patrimonio, composizione, target e fondo di emergenza usando i dati del caveau sbloccato. I calcoli e le domande digitate restano nel dispositivo; la cronologia della schermata non viene salvata ed è cancellata quando si blocca il caveau.
+- La simulazione mostra come ripartire un importo secondo i target configurati (con normalizzazione se non sommano a 100%). È solo uno scenario didattico: non sceglie prodotti, non invia ordini e non è consulenza finanziaria.
+- Le risposte possono essere lette con la sintesi vocale del browser; la dettatura è disponibile solo nei browser che supportano Web Speech API. Disponibilità offline della dettatura e delle voci dipende dal dispositivo/browser; la dettatura può usare un servizio del browser.
+- L'assistente non usa un modello generativo e non fornisce notizie o quotazioni live. Service worker aggiornato alla cache v3-7.

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Financial Dashboard</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dbeafe"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#86efac"/>
+      <stop offset="1" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#0f172a" flood-opacity=".35"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="98" y="76" width="316" height="316" rx="78" fill="url(#tile)" stroke="#dcfce7" stroke-opacity=".35" stroke-width="5" filter="url(#shadow)"/>
+  <path d="M160 310V173M160 310h198" fill="none" stroke="#f8fafc" stroke-linecap="round" stroke-width="13" opacity=".94"/>
+  <path d="m184 272 56-62 51 38 73-85" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M331 163h34v34" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"/>
+</svg>
