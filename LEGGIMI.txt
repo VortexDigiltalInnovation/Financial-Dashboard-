@@ -1,10 +1,9 @@
-# Financial Dashboard — PWA v3.10.5
+# Financial Dashboard — PWA v3.10.1
 
 ## Contenuto
 - `index.html`: applicazione (guida utente integrata)
 - `tailwind.css`: stili compilati in locale (non serve più il CDN di Tailwind)
 - `manifest.webmanifest`, `service-worker.js`: installazione come app e funzionamento offline
-- `vendor/fontawesome/`: icone dell'interfaccia (Font Awesome Free, licenza inclusa)
 - `icons/`: icone con nome dell'app (72–512 px, maskable 192/512, apple-touch-icon 180), logo senza testo (logo-96/128/192) e favicon 64
 - `Guida_Utente_FinDashboard_Ultimate_Pro.pdf`: guida PDF aggiornata alla v3.5 (nuovo nome), apribile dall'app
 
@@ -24,23 +23,6 @@ Per trasferirli su un altro indirizzo/dispositivo: "Backup cifrato" (.enc) nella
 - Icona: il nome completo «Financial Dashboard» è ora scritto sull'icona (tutte le misure, anche maskable e iPhone) e nel nome sotto l'icona (short_name del manifest non più abbreviato). Intestazione e favicon usano il logo senza testo (icons/logo-*.png) per restare leggibili. Su molti telefoni l'icona sulla Home cambia solo reinstallando l'app.
 - Banner promemoria backup: nuovo pulsante «Più tardi» (lo rinvia di 24 ore); il rinvio si azzera con un nuovo backup.
 - Accessibilità: contorno ben visibile sull'elemento attivo quando si naviga da tastiera.
-
-## Novità v3.10.5
-- Installazione Chrome/PWA resa più robusta: manifest semplificato con PNG standard 192/512 e icone maskable dedicate; `start_url` e `scope` uniformati.
-- Service worker rinnovato: installazione non viene più bloccata da risorse secondarie o CDN non disponibili; cache locale con percorsi assoluti risolti rispetto alla cartella di pubblicazione; fallback offline della pagina principale.
-- Icone dei pulsanti: Font Awesome 6.5.1 resta completamente locale (solidi, regular e brand), con precaricamento dei font per evitare pulsanti temporaneamente senza simboli. Verificati tutti i nomi delle icone usati nell'HTML.
-- Loghi e immagini: controllati i file PNG del logo, favicon, icone PWA e apple-touch-icon; aggiunti attributi di caricamento e testo alternativo ai loghi visibili.
-- Aggiunto `_headers` per Netlify: service worker, manifest e pagina principale non vengono serviti da cache obsolete.
-
-## Novità v3.10.4
-- Aggiornamento più affidabile: prima, se sul server mancava anche un solo file (es. la cartella `vendor` o `icons`), la nuova versione non si installava e l'app restava sulla vecchia senza avvisi. Ora solo `index.html` e `manifest.webmanifest` sono indispensabili; fogli di stile, icone, font e librerie secondarie vengono precaricati senza bloccare l’installazione; il resto è facoltativo. Se l'installazione fallisce compare un avviso. Il pulsante «Aggiorna» ricarica comunque l'app dopo 4 secondi.
-
-## Novità v3.10.3
-- Icone e loghi sempre visibili: Font Awesome è ora incluso nel pacchetto (cartella `vendor/fontawesome`) invece di essere scaricato da Internet; funziona anche offline e alla prima apertura. Ricorda di caricare anche la cartella `vendor`.
-- Menu Strumenti riordinato senza duplicati: Guida, Blocca, Tema e Installa restano nell'intestazione; Importa CSV, Quote JSON, Report Excel/PDF, Avvisi e Cambia password sono solo in Strumenti (sezioni: Dati e report, Sicurezza, Preferenze, Backup). In Backup, Google Drive, Cartella dell'app e Automatismi si aprono a richiesta.
-
-## Novità v3.10.2
-- Il feedback aptico non viene più richiesto prima del primo tocco (evita l'avviso del browser dopo lo sblocco biometrico automatico).
 
 ## Novità v3.10.1
 - Marchio vettoriale SVG aggiunto come favicon e icona PWA aggiuntiva; l'intestazione e la schermata di blocco lo usano automaticamente se il rispettivo PNG non è disponibile.
@@ -120,12 +102,3 @@ Note: se pubblichi l'app su un altro indirizzo, aggiungi anche quello alle origi
 - La simulazione mostra come ripartire un importo secondo i target configurati (con normalizzazione se non sommano a 100%). È solo uno scenario didattico: non sceglie prodotti, non invia ordini e non è consulenza finanziaria.
 - Le risposte possono essere lette con la sintesi vocale del browser; la dettatura è disponibile solo nei browser che supportano Web Speech API. Disponibilità offline della dettatura e delle voci dipende dal dispositivo/browser; la dettatura può usare un servizio del browser.
 - L'assistente non usa un modello generativo e non fornisce notizie o quotazioni live. Service worker aggiornato alla cache v3-7.
-
-
-VERSIONE 3.10.6 – CORREZIONE ICONE E INSTALLAZIONE PWA
-- Caricare TUTTO il contenuto dello ZIP nella root del sito Netlify.
-- Non caricare lo ZIP come singolo file e non lasciare la vecchia versione in una sottocartella.
-- Verificare che /manifest.webmanifest, /service-worker.js, /icons/ e /vendor/ siano raggiungibili.
-- Dopo la pubblicazione: Chrome > DevTools > Application > Storage > Clear site data;
-  poi Application > Service Workers > Unregister, ricaricare due volte e riprovare l'installazione.
-- La PWA richiede HTTPS (Netlify lo fornisce sul dominio *.netlify.app).
