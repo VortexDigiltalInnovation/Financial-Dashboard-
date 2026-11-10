@@ -1,4 +1,4 @@
-# Financial Dashboard — PWA v3.10.4
+# Financial Dashboard — PWA v3.10.5
 
 ## Contenuto
 - `index.html`: applicazione (guida utente integrata)
@@ -25,8 +25,15 @@ Per trasferirli su un altro indirizzo/dispositivo: "Backup cifrato" (.enc) nella
 - Banner promemoria backup: nuovo pulsante «Più tardi» (lo rinvia di 24 ore); il rinvio si azzera con un nuovo backup.
 - Accessibilità: contorno ben visibile sull'elemento attivo quando si naviga da tastiera.
 
+## Novità v3.10.5
+- Installazione Chrome/PWA resa più robusta: manifest semplificato con PNG standard 192/512 e icone maskable dedicate; `start_url` e `scope` uniformati.
+- Service worker rinnovato: installazione non viene più bloccata da risorse secondarie o CDN non disponibili; cache locale con percorsi assoluti risolti rispetto alla cartella di pubblicazione; fallback offline della pagina principale.
+- Icone dei pulsanti: Font Awesome 6.5.1 resta completamente locale (solidi, regular e brand), con precaricamento dei font per evitare pulsanti temporaneamente senza simboli. Verificati tutti i nomi delle icone usati nell'HTML.
+- Loghi e immagini: controllati i file PNG del logo, favicon, icone PWA e apple-touch-icon; aggiunti attributi di caricamento e testo alternativo ai loghi visibili.
+- Aggiunto `_headers` per Netlify: service worker, manifest e pagina principale non vengono serviti da cache obsolete.
+
 ## Novità v3.10.4
-- Aggiornamento più affidabile: prima, se sul server mancava anche un solo file (es. la cartella `vendor` o `icons`), la nuova versione non si installava e l'app restava sulla vecchia senza avvisi. Ora solo `index.html`, `manifest.webmanifest` e `tailwind.css` sono indispensabili; il resto è facoltativo. Se l'installazione fallisce compare un avviso. Il pulsante «Aggiorna» ricarica comunque l'app dopo 4 secondi.
+- Aggiornamento più affidabile: prima, se sul server mancava anche un solo file (es. la cartella `vendor` o `icons`), la nuova versione non si installava e l'app restava sulla vecchia senza avvisi. Ora solo `index.html` e `manifest.webmanifest` sono indispensabili; fogli di stile, icone, font e librerie secondarie vengono precaricati senza bloccare l’installazione; il resto è facoltativo. Se l'installazione fallisce compare un avviso. Il pulsante «Aggiorna» ricarica comunque l'app dopo 4 secondi.
 
 ## Novità v3.10.3
 - Icone e loghi sempre visibili: Font Awesome è ora incluso nel pacchetto (cartella `vendor/fontawesome`) invece di essere scaricato da Internet; funziona anche offline e alla prima apertura. Ricorda di caricare anche la cartella `vendor`.
