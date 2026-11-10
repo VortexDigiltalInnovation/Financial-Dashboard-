@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./tailwind.css?v=3.5">
 
     <!-- Font Awesome Pro icons CDN -->
-    <link rel="stylesheet" href="./vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -117,15 +117,6 @@
 .fdx-banner>div{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.7rem .9rem;border-radius:1rem;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:#92400e;font-size:.75rem;font-weight:700}
 .dark .fdx-banner>div{color:#fcd34d}
 .fdx-banner button{padding:.5rem .8rem;border-radius:.75rem;background:#f59e0b;color:#fff;font-weight:800;font-size:.7rem;min-height:36px}
-.fdx-grp{margin:.9rem 0 .35rem;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8}
-.fdx-grp:first-of-type{margin-top:0}
-.fdx-tiles{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.fdx-tile{padding:.75rem;border-radius:1rem;display:flex;align-items:center;gap:.5rem;text-align:left;font-size:.75rem;font-weight:700}
-.fdx-tile.blue{background:rgba(59,130,246,.1);color:#2563eb}.fdx-tile.violet{background:rgba(139,92,246,.1);color:#7c3aed}
-.fdx-tile.green{background:rgba(16,185,129,.1);color:#059669}.fdx-tile.rose{background:rgba(244,63,94,.1);color:#e11d48}
-.dark .fdx-tile.blue{color:#60a5fa}.dark .fdx-tile.violet{color:#a78bfa}.dark .fdx-tile.green{color:#34d399}.dark .fdx-tile.rose{color:#fb7185}
-.fdx-line{margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(148,163,184,.25)}
-.fdx-b.r{background:rgba(244,63,94,.12);color:#e11d48}.dark .fdx-b.r{color:#fb7185}
 .fdx-gridbtn{padding:.75rem;border-radius:1rem;background:rgba(245,158,11,.12);color:#b45309;display:flex;align-items:center;gap:.5rem;text-align:left;font-size:.75rem;font-weight:700;grid-column:span 2}
 .dark .fdx-gridbtn{color:#fbbf24}
 .fdx-navarrow{position:absolute;top:0;bottom:0;width:38px;z-index:2;display:flex;align-items:center;border:0;color:#475569;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -156,7 +147,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                 <div>
                     <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
                         <span class="whitespace-nowrap">Financial Dashboard</span>
-                        <span class="app-version-badge" title="Versione dell'app" aria-label="Versione dell'app">v3.10.4</span>
+                        <span class="app-version-badge" title="Versione dell'app" aria-label="Versione dell'app">v3.10.2</span>
                     </h1>
                     <p class="hidden sm:block text-[11px] text-slate-500 dark:text-slate-400 font-medium">Bank-Grade Wealth Management (IndexedDB + AES-GCM)</p>
                 </div>
@@ -164,8 +155,22 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
 
             <!-- Top Actions: su smartphone barra a 4 pulsanti grandi con etichetta; su schermi larghi riga di icone -->
             <div class="grid grid-cols-4 gap-2 w-full sm:w-auto sm:flex sm:items-center sm:gap-1.5 sm:shrink-0 sm:overflow-x-auto no-scrollbar sm:max-w-full py-1">
+                <button onclick="triggerCsvImport()" title="Importa CSV Banca (Intesa, UniCredit, Mediolanum, Fideuram, Directa)" class="min-h-[40px] min-w-[40px] justify-center max-sm:hidden p-2.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400">
+                    <i class="fa-solid fa-file-csv text-sm"></i> <span class="hidden sm:inline">Importa CSV Banca</span>
+                </button>
                 <input type="file" id="importCsvInput" accept=".csv,.txt" class="hidden" onchange="handleCsvStatementImport(event)">
+
+                <button onclick="triggerImportQuotes()" title="Importa Quotazioni JSON Locale" class="min-h-[40px] min-w-[40px] justify-center max-sm:hidden p-2.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400">
+                    <i class="fa-solid fa-file-import text-sm"></i> <span class="hidden sm:inline">Quote JSON</span>
+                </button>
                 <input type="file" id="importQuotesInput" accept=".json" class="hidden" onchange="handleQuotesImport(event)">
+
+                <button onclick="exportExcelReport()" title="Excel" class="min-h-[40px] min-w-[40px] justify-center max-sm:hidden p-2.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                    <i class="fa-solid fa-file-excel text-sm"></i> <span class="hidden sm:inline">Excel</span>
+                </button>
+                <button onclick="exportPdfReport()" title="PDF" class="min-h-[40px] min-w-[40px] justify-center max-sm:hidden p-2.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400">
+                    <i class="fa-solid fa-file-pdf text-sm"></i> <span class="hidden sm:inline">PDF</span>
+                </button>
                 <input type="file" id="importFileInput" class="hidden" onchange="handleFileImport(event)">
 
                 <button id="installBtn" onclick="installApp()" title="Installa l'app" class="hidden col-span-4 sm:col-auto min-h-[48px] sm:min-h-[40px] justify-center px-3 py-2 rounded-2xl sm:rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-extrabold text-xs items-center gap-1.5 shrink-0">
@@ -176,6 +181,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                 </button>
                 <button onclick="openToolsSheet()" title="Strumenti: backup, avvisi di prezzo, biometria" aria-label="Strumenti" class="flex flex-col sm:flex-row items-center justify-center gap-1 min-h-[56px] sm:min-h-[40px] sm:min-w-[40px] px-1 sm:p-2.5 rounded-2xl sm:rounded-xl text-[11px] sm:text-xs font-extrabold shrink-0 active:scale-95 transition-transform fdx-tools-btn">
                     <i class="fa-solid fa-screwdriver-wrench text-xl sm:text-sm"></i> <span class="leading-none sm:hidden lg:inline">Strumenti</span><span id="fdxToolsDot" class="fdx-dot" aria-hidden="true"></span>
+                </button>
+                <button onclick="openChangePasswordModal()" title="Cambia password" class="min-h-[40px] min-w-[40px] justify-center max-sm:hidden p-2.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                    <i class="fa-solid fa-key"></i> <span class="hidden xl:inline">Password</span>
                 </button>
                 <button onclick="lockVaultManual()" title="Blocca il caveau" aria-label="Blocca il caveau" class="flex flex-col sm:flex-row items-center justify-center gap-1 min-h-[56px] sm:min-h-[40px] sm:min-w-[40px] px-1 sm:p-2.5 rounded-2xl sm:rounded-xl text-[11px] sm:text-xs font-extrabold shrink-0 active:scale-95 transition-transform bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400">
                     <i class="fa-solid fa-lock text-xl sm:text-sm"></i> <span class="leading-none sm:hidden lg:inline">Blocca</span>
@@ -1052,7 +1060,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
         <div class="relative glass-card rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-white/20 dark:border-slate-700/60 text-center my-auto">
             <img src="./icons/logo-128.png" onerror="this.onerror=null;this.src='./icons/financial-dashboard-mark.svg';" alt="" width="72" height="72" class="w-[72px] h-[72px] mx-auto mb-4 rounded-[1.4rem] shadow-xl shadow-blue-500/30">
             <h2 id="masterTitle" class="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1">Financial Dashboard</h2>
-            <div class="mb-3"><span class="app-version-badge" aria-label="Versione dell'app">v3.10.4</span></div>
+            <div class="mb-3"><span class="app-version-badge" aria-label="Versione dell'app">v3.10.2</span></div>
             <p id="masterHint" class="text-[11px] text-slate-500 dark:text-slate-400 mb-5 font-medium">Inserisci la tua Master Password cifrata AES-GCM (PBKDF2 600.000 iterazioni).</p>
 
             <form onsubmit="unlockVault(event)" class="space-y-3.5" autocomplete="on">
@@ -1524,7 +1532,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                     <summary class="cursor-pointer list-none px-4 py-3 font-extrabold text-slate-900 dark:text-white flex items-center justify-between"><span><i class="fa-solid fa-mobile-screen-button text-blue-600 mr-1.5"></i> 3. Installa come app (novità)</span> <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform group-open:rotate-180"></i></summary>
                     <div class="px-4 pb-4 space-y-3">
                         <p>L'app può essere installata sulla schermata Home e usata a schermo intero, anche <b>offline</b>. Serve aprire l'indirizzo <b>HTTPS</b> in cui è pubblicata, la prima volta con Internet attivo (così librerie e font vengono salvati sul dispositivo).</p>
-                        <div class="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800"><b><i class="fa-brands fa-android text-emerald-500"></i> Android (Chrome / Edge)</b><br>Tocca il pulsante <b>Installa</b> nell'intestazione (o nel menu <i>Strumenti → Preferenze</i>), oppure menu ⋮ del browser → <i>Installa app</i>.</div>
+                        <div class="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800"><b><i class="fa-brands fa-android text-emerald-500"></i> Android (Chrome / Edge)</b><br>Tocca il pulsante <b>Installa</b> nell'intestazione (o nel menu <i>Strumenti</i>), oppure menu ⋮ del browser → <i>Installa app</i>.</div>
                         <div class="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800"><b><i class="fa-brands fa-apple"></i> iPhone / iPad (Safari)</b><br>Tocca <b>Condividi</b> <i class="fa-solid fa-arrow-up-from-bracket"></i> → <b>Aggiungi alla schermata Home</b>. Su iOS l'installazione funziona solo da Safari.</div>
                         <div class="rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-200 dark:border-slate-800"><b><i class="fa-solid fa-desktop"></i> Computer (Chrome / Edge)</b><br>Icona <i>Installa</i> nella barra degli indirizzi oppure il pulsante <b>Installa</b> nell'app.</div>
                         <p class="text-[12px] text-slate-500 dark:text-slate-400">Nota: i dati dell'app installata e quelli del browser normale sono archivi separati su alcuni sistemi (soprattutto iPhone). Dopo l'installazione usa <b>Backup → Ripristina</b> per trasferire il caveau.</p>
@@ -1553,7 +1561,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                             <li><b>Auto-blocco:</b> il caveau si blocca da solo dopo un periodo di inattività (predefinito 5 minuti) e quando l'app resta in background oltre quel tempo. Si regola in <i>Strumenti → Blocco automatico</i>.</li>
                             <li><b>Blocco manuale:</b> icona <i class="fa-solid fa-lock"></i> in alto. Al blocco i dati vengono rimossi dallo schermo e dalla memoria dell'app.</li>
                             <li><b>Sblocco biometrico:</b> da <i>Strumenti → Sblocco biometrico</i> puoi usare impronta, volto o PIN del dispositivo (WebAuthn) al posto della password. La Master Password resta la chiave di recupero: serve se cambi dispositivo, ripristini un backup o la biometria non risponde. Se il dispositivo supporta l'estensione PRF, la chiave è legata al sensore; altrimenti si usa una modalità compatibile in cui la verifica biometrica protegge l'accesso all'app ma non cifra la chiave a livello hardware. Dopo un cambio password l'app chiede una nuova verifica per aggiornarla.</li>
-                            <li><b>Cambio password:</b> <i>Strumenti → Sicurezza → Cambia password</i>: il caveau viene ricifrato con la nuova password.</li>
+                            <li><b>Cambio password:</b> icona <i class="fa-solid fa-key"></i> (o menu Strumenti): il caveau viene ricifrato con la nuova password.</li>
                             <li>Scegli una password lunga e unica (una frase di 4-5 parole è più sicura di una sigla complessa).</li>
                         </ul>
                     </div>
@@ -1563,14 +1571,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                     <summary class="cursor-pointer list-none px-4 py-3 font-extrabold text-slate-900 dark:text-white flex items-center justify-between">6. Backup, ripristino e report <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform group-open:rotate-180"></i></summary>
                     <div class="px-4 pb-4 space-y-2">
                         <ul class="list-disc pl-5 space-y-1">
-                            <li><b>Backup cifrato (.enc):</b> <i>Strumenti → Backup e ripristino → Salva backup</i> . Su smartphone si apre il pannello di condivisione per salvare il file in File / Drive. Fallo con regolarità: l'app ti ricorda se sono passati più di 30 giorni.</li>
-                            <li><b>Ripristino:</b> <i>Strumenti → Backup e ripristino → Ripristina</i>. Se il backup è stato creato con un'altra password, l'app te la chiede. I dati attuali vengono sostituiti.</li>
+                            <li><b>Backup cifrato (.enc):</b> <i>Strumenti → Backup e ripristino → Salva backup</i> (o icona <i class="fa-solid fa-download"></i>). Su smartphone si apre il pannello di condivisione per salvare il file in File / Drive. Fallo con regolarità: l'app ti ricorda se sono passati più di 30 giorni.</li>
+                            <li><b>Ripristino:</b> <i>Ripristina backup</i> (icona <i class="fa-solid fa-upload"></i>). Se il backup è stato creato con un'altra password, l'app te la chiede. I dati attuali vengono sostituiti.</li>
                             <li><b>Google Drive:</b> <i>Strumenti → Backup e ripristino → Salva su Drive</i> carica il backup già cifrato in un file visibile nel tuo Drive, cartella <i>Financial Dashboard Backup</i> (puoi rinominarlo, spostarlo o eliminarlo da Drive; non modificarne il contenuto, perché è cifrato; puoi scegliere quante copie tenere (3, 5, 10 o 20): raggiunto il limite, la più vecchia viene sovrascritta dalla nuova; l'app vede solo i file che ha creato). <i>Ripristina</i> mostra l'elenco e riparte dalla normale procedura con password. Alla prima volta serve il tuo Client ID Google: vedi LEGGIMI.txt, sezione «Backup su Google Drive».</li>
                             <li><b>Promemoria e backup automatico:</b> in <i>Strumenti</i> scegli dopo quanti giorni (7, 14 o 30) mostrare l'avviso di backup. Opzionalmente l'app prova a salvare da sola su Drive quando il promemoria scatta; se Google chiede un'azione manuale ti avvisa.</li>
                             <li><b>Aggiornamenti:</b> quando è pronta una nuova versione compare il riquadro <i>Nuova versione disponibile</i>: tocca <b>Aggiorna</b> per applicarla.</li>
                             <li><b>Nuovo dispositivo:</b> al primo avvio, nella schermata di creazione del caveau, tocca <i>Ripristina da backup</i>, scegli il file .enc e inserisci la sua password.</li>
-                            <li><b>Report Excel</b> (<i>Strumenti → Dati e report</i>): cartella di lavoro con fogli per conti, asset, BTP, Poste, PAC, flussi, spese e storico.</li>
-                            <li><b>Report PDF</b> (<i>Strumenti → Dati e report</i>): istantanea della scheda aperta, su più pagine.</li>
+                            <li><b>Report Excel:</b> cartella di lavoro con fogli per conti, asset, BTP, Poste, PAC, flussi, spese e storico.</li>
+                            <li><b>Report PDF:</b> istantanea della scheda aperta, su più pagine.</li>
                         </ul>
                     </div>
                 </details>
@@ -1603,7 +1611,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                     <a href="./Guida_Utente_FinDashboard_Ultimate_Pro.pdf" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 font-extrabold text-xs flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Apri la guida PDF originale (v2.0, con il vecchio nome)</a>
                     <button onclick="closeGuide()" class="px-4 py-2.5 rounded-2xl bg-blue-600 text-white font-extrabold text-xs">Ho capito</button>
                 </div>
-                <p class="text-[10px] text-slate-400 text-center pt-1">Financial Dashboard · v3.10.4</p>
+                <p class="text-[10px] text-slate-400 text-center pt-1">Financial Dashboard · v3.10.2</p>
             </div>
         </div>
     </div>
@@ -1627,62 +1635,49 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
         </div>
     </div>
 
-    <!-- ===== FinDash Pro: menu Strumenti (v3.10.3: sezioni senza duplicati) ===== -->
+    <!-- ===== FinDash Pro: menu Strumenti ===== -->
     <div id="toolsSheet" class="fixed inset-0 z-[65] hidden bg-slate-950/60 backdrop-blur-sm flex items-end sm:items-center justify-center" onclick="if(event.target===this)closeToolsSheet()" role="dialog" aria-modal="true" aria-labelledby="toolsTitle">
         <div class="glass-card w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl p-4 shadow-2xl" style="max-height:90dvh;overflow-y:auto;padding-bottom:calc(1rem + env(safe-area-inset-bottom))">
             <div class="flex items-center justify-between mb-3">
                 <h3 id="toolsTitle" class="font-extrabold text-base text-slate-900 dark:text-white">Strumenti</h3>
                 <button onclick="closeToolsSheet()" aria-label="Chiudi" class="w-10 h-10 rounded-2xl bg-slate-200/70 dark:bg-slate-800 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <div class="fdx-grp">Dati e report</div>
-            <div class="fdx-tiles">
-                <button onclick="toolsDo(triggerCsvImport)" class="fdx-tile blue"><i class="fa-solid fa-file-csv"></i> Importa CSV banca</button>
-                <button onclick="toolsDo(triggerImportQuotes)" class="fdx-tile violet"><i class="fa-solid fa-file-import"></i> Quote JSON</button>
-                <button onclick="toolsDo(exportExcelReport)" class="fdx-tile green"><i class="fa-solid fa-file-excel"></i> Report Excel</button>
-                <button onclick="toolsDo(exportPdfReport)" class="fdx-tile rose"><i class="fa-solid fa-file-pdf"></i> Report PDF</button>
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                <button onclick="toolsDo(openGuide)" class="p-3 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center gap-2 text-left"><i class="fa-solid fa-circle-question"></i> Guida</button>
+                <button id="installSheetBtn" onclick="toolsDo(installApp)" class="hidden p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 items-center gap-2 text-left"><i class="fa-solid fa-download"></i> Installa app</button>
+                <button onclick="toolsDo(triggerCsvImport)" class="p-3 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center gap-2 text-left"><i class="fa-solid fa-file-csv"></i> Importa CSV Banca</button>
+                <button onclick="toolsDo(triggerImportQuotes)" class="p-3 rounded-2xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center gap-2 text-left"><i class="fa-solid fa-file-import"></i> Quote JSON</button>
+                <button onclick="toolsDo(exportExcelReport)" class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center gap-2 text-left"><i class="fa-solid fa-file-excel"></i> Report Excel</button>
+                <button onclick="toolsDo(exportPdfReport)" class="p-3 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center gap-2 text-left"><i class="fa-solid fa-file-pdf"></i> Report PDF</button>
+                <button onclick="toolsDo(fdAlerts.open)" class="fdx-gridbtn"><i class="fa-solid fa-bell"></i> Avvisi di prezzo <span id="fdxAlertBadge" class="fdx-sub" style="margin:0 0 0 auto"></span></button>
+                <button onclick="toolsDo(openChangePasswordModal)" class="p-3 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center gap-2 text-left"><i class="fa-solid fa-key"></i> Cambia password</button>
+                <button onclick="toolsDo(lockVaultManual)" class="p-3 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center gap-2 text-left"><i class="fa-solid fa-lock"></i> Blocca ora</button>
             </div>
-
-            <button onclick="toolsDo(fdAlerts.open)" class="fdx-gridbtn" style="width:100%;margin-top:.5rem"><i class="fa-solid fa-bell"></i> Avvisi di prezzo <span id="fdxAlertBadge" class="fdx-sub" style="margin:0 0 0 auto"></span></button>
-
-            <div class="fdx-grp">Sicurezza</div>
-            <div class="fdx-sec" style="margin-top:0">
-                <div class="fdx-row" style="margin-top:0">
-                    <label for="autoLockSelect" class="fdx-sec-t"><i class="fa-solid fa-hourglass-half mr-1.5"></i> Blocco automatico</label>
-                    <select id="autoLockSelect" onchange="setAutoLockMinutes(this.value)" class="fdx-sel">
-                        <option value="0">Disattivato</option>
-                        <option value="1">1 minuto</option>
-                        <option value="2">2 minuti</option>
-                        <option value="5">5 minuti</option>
-                        <option value="10">10 minuti</option>
-                        <option value="30">30 minuti</option>
-                    </select>
-                </div>
-                <div class="fdx-row fdx-line">
-                    <div class="min-w-0">
-                        <div class="fdx-sec-t"><i class="fa-solid fa-fingerprint mr-1.5"></i> Sblocco biometrico</div>
-                        <div id="bioStatusLine" class="fdx-sub">Usa impronta, volto o PIN del dispositivo al posto della password.</div>
-                    </div>
-                    <button id="bioToggleBtn" type="button" onclick="fdBio.toggle()" class="shrink-0 px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-extrabold">Attiva</button>
-                </div>
-                <div class="fdx-line">
-                    <button type="button" onclick="toolsDo(openChangePasswordModal)" class="fdx-b" style="width:100%"><i class="fa-solid fa-key mr-1"></i> Cambia password</button>
-                </div>
+            <div class="mt-3 p-3 rounded-2xl bg-slate-100 dark:bg-slate-900 flex items-center justify-between gap-3">
+                <label for="autoLockSelect" class="text-xs font-extrabold text-slate-600 dark:text-slate-300"><i class="fa-solid fa-hourglass-half mr-1.5"></i> Blocco automatico</label>
+                <select id="autoLockSelect" onchange="setAutoLockMinutes(this.value)" class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-bold">
+                    <option value="0">Disattivato</option>
+                    <option value="1">1 minuto</option>
+                    <option value="2">2 minuti</option>
+                    <option value="5">5 minuti</option>
+                    <option value="10">10 minuti</option>
+                    <option value="30">30 minuti</option>
+                </select>
             </div>
-
-            <div class="fdx-grp">Preferenze</div>
-            <div class="fdx-sec" style="margin-top:0">
-                <div class="fdx-row">
-                    <div class="min-w-0">
-                        <div class="fdx-sec-t"><i class="fa-solid fa-hand-pointer mr-1.5"></i> Feedback aptico</div>
-                        <div id="hapticHint" class="fdx-sub">Vibrazione breve per salvataggi, eliminazioni, backup, blocco e avvisi di prezzo.</div>
-                    </div>
-                    <input id="hapticCheck" type="checkbox" onchange="fdHaptic.set(this.checked)" class="w-5 h-5 shrink-0" aria-label="Feedback aptico">
+            <div class="mt-3 p-3 rounded-2xl bg-slate-100 dark:bg-slate-900 flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                    <div class="text-xs font-extrabold text-slate-600 dark:text-slate-300"><i class="fa-solid fa-fingerprint mr-1.5"></i> Sblocco biometrico</div>
+                    <div id="bioStatusLine" class="text-[10px] text-slate-400 font-medium mt-0.5 leading-snug">Usa impronta, volto o PIN del dispositivo al posto della password.</div>
                 </div>
-                <button id="installSheetBtn" onclick="toolsDo(installApp)" class="hidden fdx-b p fdx-line" style="width:100%"><i class="fa-solid fa-download mr-1"></i> Installa app</button>
+                <button id="bioToggleBtn" type="button" onclick="fdBio.toggle()" class="shrink-0 px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-extrabold">Attiva</button>
             </div>
-
-            <div class="fdx-grp">Backup</div>
+            <div class="fdx-sec flex items-center justify-between gap-3" style="display:flex;align-items:center;justify-content:space-between;gap:.75rem">
+                <div class="min-w-0">
+                    <div class="fdx-sec-t"><i class="fa-solid fa-hand-pointer mr-1.5"></i> Feedback aptico</div>
+                    <div id="hapticHint" class="fdx-sub">Vibrazione breve per salvataggi, eliminazioni, backup, blocco e avvisi di prezzo.</div>
+                </div>
+                <input id="hapticCheck" type="checkbox" onchange="fdHaptic.set(this.checked)" class="w-5 h-5 shrink-0" aria-label="Feedback aptico">
+            </div>
             <details id="backupHub" class="fdx-sec" open>
                 <summary class="fdx-sec-t" style="cursor:pointer;list-style:none"><i class="fa-solid fa-shield-halved mr-1.5"></i> Backup e ripristino</summary>
                 <p id="backupInfoLine" class="fdx-sub"></p>
@@ -1693,8 +1688,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                         <button type="button" onclick="toolsDo(triggerImport)" class="fdx-b"><i class="fa-solid fa-upload mr-1"></i> Ripristina</button>
                     </div>
                 </div>
-                <details class="fdx-dest">
-                    <summary class="fdx-dest-h" style="cursor:pointer"><i class="fa-brands fa-google-drive mr-1.5"></i> Google Drive</summary>
+                <div class="fdx-dest">
+                    <div class="fdx-dest-h"><i class="fa-brands fa-google-drive mr-1.5"></i> Google Drive</div>
                     <div id="driveStatusLine" class="fdx-sub"></div>
                     <div class="fdx-2">
                         <button id="driveBackupBtn" type="button" onclick="toolsDo(fdDrive.backup)" class="fdx-b p"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Salva su Drive</button>
@@ -1702,18 +1697,18 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                     </div>
                     <button type="button" onclick="fdDrive.setClientId()" class="fdx-link"><i class="fa-solid fa-key mr-1"></i>Imposta / cambia Client ID Google</button>
                     <a id="driveOpenLink" href="#" target="_blank" rel="noopener" class="hidden fdx-link"><i class="fa-brands fa-google-drive mr-1"></i>Apri la cartella dei backup su Drive</a>
-                </details>
-                <details class="fdx-dest">
-                    <summary class="fdx-dest-h" style="cursor:pointer"><i class="fa-solid fa-folder-open mr-1.5"></i> Cartella dell'app <span class="fdx-sub" style="display:inline">(copia automatica)</span></summary>
+                </div>
+                <div class="fdx-dest">
+                    <div class="fdx-dest-h"><i class="fa-solid fa-folder-open mr-1.5"></i> Cartella dell'app <span class="fdx-sub" style="display:inline">(copia automatica sul dispositivo)</span></div>
                     <div id="folderStatusLine" class="fdx-sub"></div>
                     <div class="fdx-2">
                         <button id="folderLinkBtn" type="button" onclick="fdFolder.link()" class="fdx-b p"><i class="fa-solid fa-folder-plus mr-1"></i> Crea cartella</button>
                         <button type="button" onclick="toolsDo(fdFolder.restore)" class="fdx-b"><i class="fa-solid fa-rotate-left mr-1"></i> Ripristina</button>
                     </div>
                     <button id="folderUnlinkBtn" type="button" onclick="fdFolder.unlink()" class="hidden fdx-link r"><i class="fa-solid fa-link-slash mr-1"></i>Scollega la cartella del dispositivo</button>
-                </details>
-                <details class="fdx-dest">
-                    <summary class="fdx-dest-h" style="cursor:pointer"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Automatismi</summary>
+                </div>
+                <div class="fdx-dest">
+                    <div class="fdx-dest-h"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Automatismi</div>
                     <div class="fdx-row">
                         <label for="backupDaysSelect" class="fdx-sub" style="margin:0;font-weight:700">Promemoria backup</label>
                         <select id="backupDaysSelect" onchange="setBackupDays(this.value)" class="fdx-sel"><option value="0">Disattivato</option><option value="7">Dopo 7 giorni</option><option value="14">Dopo 14 giorni</option><option value="30">Dopo 30 giorni</option></select>
@@ -1722,11 +1717,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline-offset:0
                         <label for="backupKeepSelect" class="fdx-sub" style="margin:0;font-weight:700">Copie da conservare <span style="font-weight:500">(Drive e cartella)</span></label>
                         <select id="backupKeepSelect" onchange="setBackupKeep(this.value)" class="fdx-sel"><option value="3">3 copie</option><option value="5">5 copie</option><option value="10">10 copie</option><option value="20">20 copie</option></select>
                     </div>
+                    <p class="fdx-keepnote"><i class="fa-solid fa-rotate mr-1"></i>Raggiunto il limite, il backup più vecchio viene sovrascritto da quello nuovo: niente accumulo di file.</p>
                     <label class="fdx-row"><span class="fdx-sub" style="margin:0;font-weight:700">Salva da solo su Drive quando scatta il promemoria</span><input id="autoDriveCheck" type="checkbox" onchange="setAutoDrive(this.checked)" class="w-5 h-5 shrink-0"></label>
-                    <p class="fdx-keepnote"><i class="fa-solid fa-rotate mr-1"></i>Raggiunto il limite, il backup più vecchio viene sovrascritto da quello nuovo.</p>
-                </details>
+                </div>
             </details>
-
         </div>
     </div>
 
@@ -4930,8 +4924,6 @@ window.fdBio = (function () {
             window.__fdUpdating = true;
             const w = reg && reg.waiting;
             if (w) w.postMessage({ type: 'SKIP_WAITING' }); else location.reload();
-            // rete di sicurezza: se il cambio di versione non arriva entro 4 s, ricarica comunque la pagina
-            setTimeout(() => { if (window.__fdUpdating) { window.__fdUpdating = false; location.reload(); } }, 4000);
         };
     }
     if ('serviceWorker' in navigator && window.isSecureContext && /^https?:$/.test(location.protocol)) {
@@ -4944,9 +4936,6 @@ window.fdBio = (function () {
                         const nw = reg.installing; if (!nw) return;
                         nw.addEventListener('statechange', () => {
                             if (nw.state === 'installed' && navigator.serviceWorker.controller) showUpdateBanner(reg);
-                            if (nw.state === 'redundant' && navigator.serviceWorker.controller && !reg.waiting && window.showToast) {
-                                window.showToast('Aggiornamento non riuscito: carica sul server TUTTI i file del pacchetto (anche le cartelle icons e vendor) e riapri l\'app.', 9000);
-                            }
                         });
                     });
                     reg.update().catch(() => {});
