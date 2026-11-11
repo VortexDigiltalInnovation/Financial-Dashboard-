@@ -1,14 +1,15 @@
-# Financial Dashboard — PWA v3.9.2
+# Financial Dashboard — PWA v3.11.2
 
 ## Contenuto
 - `index.html`: applicazione (guida utente integrata)
 - `tailwind.css`: stili compilati in locale (non serve più il CDN di Tailwind)
 - `manifest.webmanifest`, `service-worker.js`: installazione come app e funzionamento offline
-- `icons/`: nuove icone (72–512 px, maskable 192/512, apple-touch-icon 180, favicon 64)
+- icone dell'app (file `icon-*.png`, `apple-touch-icon.png`, `favicon-64.png`, `financial-dashboard-mark.svg`) e loghi (`logo-96/128/192.png`): nella STESSA cartella di `index.html`. Icone dell'interfaccia (Font Awesome Free) e loghi sono comunque incorporati in `index.html`.
+- (vecchio elenco) icone con nome dell'app (72–512 px, maskable 192/512, apple-touch-icon 180), logo senza testo (logo-96/128/192) e favicon 64
 - `Guida_Utente_FinDashboard_Ultimate_Pro.pdf`: guida PDF aggiornata alla v3.5 (nuovo nome), apribile dall'app
 
 ## Pubblicazione e installazione
-1. Carica TUTTI i file, mantenendo la cartella `icons`, su un hosting statico HTTPS (es. Netlify, GitHub Pages).
+1. Decomprimi lo zip e carica TUTTI i file, tutti nella stessa cartella (non ci sono sottocartelle), su un hosting statico HTTPS (es. Netlify, GitHub Pages).
 2. Apri l'indirizzo https://... (non il file locale): installazione, offline e biometria richiedono HTTPS.
 3. Android/Chrome/Edge: pulsante "Installa" nell'app (o menu del browser). iPhone/iPad: Safari -> Condividi -> Aggiungi alla schermata Home.
 4. La prima apertura richiede Internet: librerie e font vengono salvati e poi l'app funziona offline.
@@ -17,6 +18,53 @@
 ## I dati NON si spostano da soli
 I dati stanno nel browser, separati per indirizzo. I dati esistenti restano accessibili (il nome interno del database non è cambiato).
 Per trasferirli su un altro indirizzo/dispositivo: "Backup cifrato" (.enc) nella vecchia versione, poi "Ripristina da backup" nella nuova.
+
+## Novità v3.11.2
+- Schede riordinate: tocca il titolo di una sezione per comprimerla o espanderla (freccia accanto al titolo); l'app ricorda le tue scelte. Di default sono compresse solo «Assistente finanziario locale» e «Gestione categorie e budget», che si usano a richiesta. Nessun contenuto è stato rimosso.
+- Nelle schede lunghe (Overview, Cash Flow, Futuro & Rischi) in alto c'è la barra «Vai a»: salta alla sezione scelta (e la apre), più il tasto «Comprimi tutto / Espandi tutto».
+- L'app riapre l'ultima scheda che stavi guardando.
+- Pulsante «torna in cima» dopo aver scorso la pagina.
+- Il report PDF mostra sempre tutte le sezioni, anche quelle compresse.
+
+## Novità v3.11.1
+- Menu Strumenti più rapido: campo di ricerca in alto (anche Invio per lanciare il primo risultato) e scorciatoia da tastiera Ctrl+K / Cmd+K per aprirlo e chiuderlo (Esc per chiudere).
+- Gruppi comprimibili (Backup, Dati e report, Sicurezza, Preferenze, Assistenza): l'app ricorda quali hai aperto. Nessuna voce è stata tolta.
+- Il gruppo Backup è in cima e mostra a colpo d'occhio quando hai fatto l'ultimo backup («oggi», «N gg fa», in giallo se sono passati 7 giorni o più o non l'hai mai fatto).
+- Intestazione su schermi larghi: scorciatoie divise in gruppi (dati | guida e strumenti | password, blocco, tema).
+
+## Novità v3.11.0
+- Cartella piatta: nessuna sottocartella (`icons`, `vendor` eliminate). Basta caricare tutti i file nella stessa cartella: se il tuo hosting perdeva le sottocartelle, ora non succede più.
+- Loghi e icone dei pulsanti incorporati in `index.html`: si vedono sempre, anche se i file immagine mancano sul server.
+- Installazione: se `manifest.webmanifest` o le icone non sono raggiungibili, l'app crea da sola un manifest di emergenza con logo incorporato, quindi Chrome offre comunque «Installa».
+- Aggiornamento: l'installazione della nuova versione richiede solo `index.html`; tutto il resto è facoltativo.
+- Nuovo: Strumenti → Assistenza → «Aggiornamento e diagnostica»: mostra versione e stato del service worker, «Cerca aggiornamenti», «Verifica file» (elenca i file mancanti sul server) e «Ripara e ricarica» (cancella solo cache e service worker; caveau e backup restano).
+- Ripristinate nell'intestazione su schermi larghi le scorciatoie Importa CSV, Quote JSON, Excel, PDF e Password, e nel menu Strumenti «Blocca ora» e «Guida utente». Il menu resta raggruppato (Dati e report, Sicurezza, Preferenze, Backup, Assistenza).
+
+## Se l'app non si aggiorna o mancano le immagini
+1. Controlla che nella cartella del sito ci siano tutti i file dello zip, nella stessa cartella di `index.html`.
+2. Nell'app: Strumenti → Assistenza → Aggiornamento e diagnostica → «Verifica file».
+3. Poi «Cerca aggiornamenti»; se non basta, «Ripara e ricarica» (i dati non si perdono).
+4. Se l'app installata non si apre più: disinstalla e reinstalla dal browser (i dati restano nel browser solo se non cancelli i dati del sito: fai prima un backup .enc).
+
+## Novità v3.10
+- Backup con limite di copie: da Strumenti → Backup e ripristino → Automatismi scegli quante copie conservare (3, 5, 10 o 20; predefinito 10). Vale per Google Drive e per la cartella dell'app. Raggiunto il limite, il backup più vecchio viene SOVRASCRITTO da quello nuovo (su Drive il file più vecchio viene riusato: contenuto e nome aggiornati, nessun accumulo nel cestino); se abbassi il limite, le copie in eccesso vengono eliminate al backup successivo. Lo stato su Drive mostra «Copie conservate: N su M».
+- Icona: il nome completo «Financial Dashboard» è ora scritto sull'icona (tutte le misure, anche maskable e iPhone) e nel nome sotto l'icona (short_name del manifest non più abbreviato). Intestazione e favicon usano il logo senza testo (icons/logo-*.png) per restare leggibili. Su molti telefoni l'icona sulla Home cambia solo reinstallando l'app.
+- Banner promemoria backup: nuovo pulsante «Più tardi» (lo rinvia di 24 ore); il rinvio si azzera con un nuovo backup.
+- Accessibilità: contorno ben visibile sull'elemento attivo quando si naviga da tastiera.
+
+## Novità v3.10.4
+- Aggiornamento più affidabile: prima, se sul server mancava anche un solo file (es. la cartella `vendor` o `icons`), la nuova versione non si installava e l'app restava sulla vecchia senza avvisi. Ora solo `index.html`, `manifest.webmanifest` e `tailwind.css` sono indispensabili; il resto è facoltativo. Se l'installazione fallisce compare un avviso. Il pulsante «Aggiorna» ricarica comunque l'app dopo 4 secondi.
+
+## Novità v3.10.3
+- Icone e loghi sempre visibili: Font Awesome è ora incluso nel pacchetto (cartella `vendor/fontawesome`) invece di essere scaricato da Internet; funziona anche offline e alla prima apertura. Ricorda di caricare anche la cartella `vendor`.
+- Menu Strumenti riordinato senza duplicati: Guida, Blocca, Tema e Installa restano nell'intestazione; Importa CSV, Quote JSON, Report Excel/PDF, Avvisi e Cambia password sono solo in Strumenti (sezioni: Dati e report, Sicurezza, Preferenze, Backup). In Backup, Google Drive, Cartella dell'app e Automatismi si aprono a richiesta.
+
+## Novità v3.10.2
+- Il feedback aptico non viene più richiesto prima del primo tocco (evita l'avviso del browser dopo lo sblocco biometrico automatico).
+
+## Novità v3.10.1
+- Marchio vettoriale SVG aggiunto come favicon e icona PWA aggiuntiva; l'intestazione e la schermata di blocco lo usano automaticamente se il rispettivo PNG non è disponibile.
+- Cache del service worker aggiornata per distribuire subito il nuovo logo. Se l'app era già installata, aprila online e applica l'aggiornamento; alcuni sistemi mantengono l'icona Home precedente finché non reinstalli l'app.
 
 ## Novità v3.9.2
 - Corretto: lo sblocco biometrico automatico all'apertura dell'app non partiva più (la finestra "Avvisi di prezzo", nascosta via CSS, veniva scambiata per una finestra aperta). Ora parte di nuovo da solo.
