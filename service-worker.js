@@ -1,5 +1,5 @@
-/* Financial Dashboard – Service Worker v3.11.2 */
-const VERSION = 'v3-11-2';
+/* Financial Dashboard – Service Worker v3.11.3 */
+const VERSION = 'v3-11-3';
 const SHELL_CACHE = 'findash-shell-' + VERSION;
 const RUNTIME_CACHE = 'findash-runtime-' + VERSION;
 const RUNTIME_MAX_ENTRIES = 80;

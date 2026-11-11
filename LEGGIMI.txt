@@ -1,4 +1,4 @@
-# Financial Dashboard — PWA v3.11.2
+# Financial Dashboard — PWA v3.11.3
 
 ## Contenuto
 - `index.html`: applicazione (guida utente integrata)
@@ -18,6 +18,10 @@
 ## I dati NON si spostano da soli
 I dati stanno nel browser, separati per indirizzo. I dati esistenti restano accessibili (il nome interno del database non è cambiato).
 Per trasferirli su un altro indirizzo/dispositivo: "Backup cifrato" (.enc) nella vecchia versione, poi "Ripristina da backup" nella nuova.
+
+## Novità v3.11.3
+- Icona dell'app installata senza il nome «Financial Dashboard» scritto dentro: rigenerate tutte le icone (`icon-*.png`, `icon-maskable-*.png`, `apple-touch-icon.png`) con il solo simbolo. Il nome resta sotto l'icona, scritto dal sistema.
+- Se l'icona sul telefono/computer resta la vecchia: disinstalla l'app e reinstallala (Chrome aggiorna l'icona da solo, ma può metterci qualche giorno).
 
 ## Novità v3.11.2
 - Schede riordinate: tocca il titolo di una sezione per comprimerla o espanderla (freccia accanto al titolo); l'app ricorda le tue scelte. Di default sono compresse solo «Assistente finanziario locale» e «Gestione categorie e budget», che si usano a richiesta. Nessun contenuto è stato rimosso.
